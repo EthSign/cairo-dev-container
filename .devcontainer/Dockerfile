@@ -22,13 +22,6 @@ RUN mkdir -p /etc/sudoers.d && \
 USER vscode
 WORKDIR /home/vscode
 
-# Install Node
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
-    sudo apt-get install -y nodejs
-
-# Install Bun
-RUN curl -fsSL https://bun.sh/install | bash
-
 # Install Starknet Foundry
 RUN curl --proto '=https' --tlsv1.2 -sSf -y https://sh.rustup.rs | sh
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.15.0
