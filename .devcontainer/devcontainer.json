@@ -1,16 +1,11 @@
 {
-  "name": "EthSign: Solidity",
+  "name": "EthSign: Cairo",
   "build": {
     "dockerfile": "Dockerfile"
   },
   "customizations": {
     "vscode": {
-      "extensions": [
-        "juanblanco.solidity",
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
-        "adpyke.codesnap"
-      ]
+      "extensions": ["adpyke.codesnap", "starkware.cairo1"]
     }
   },
   "remoteUser": "vscode",

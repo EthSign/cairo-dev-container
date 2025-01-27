@@ -28,8 +28,16 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
 
 # Install Bun
 RUN curl -fsSL https://bun.sh/install | bash
-ENV PATH="/home/vscode/.bun/bin:${PATH}"
 
-# Install Foundry
-RUN curl -L https://foundry.paradigm.xyz | bash
-RUN /home/vscode/.foundry/bin/foundryup -i nightly
+# Install Starknet Foundry
+RUN curl --proto '=https' --tlsv1.2 -sSf -y https://sh.rustup.rs | sh
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.15.0
+RUN . "$HOME/.asdf/asdf.sh" && \
+    asdf plugin add scarb && \
+    asdf install scarb latest && \
+    asdf global scarb latest && \
+    asdf plugin add starknet-foundry && \
+    asdf install starknet-foundry latest && \
+    asdf global starknet-foundry latest
+RUN echo '. "$HOME/.asdf/asdf.sh"' >> /home/vscode/.bashrc && \
+    echo '. "$HOME/.asdf/completions/asdf.bash"' >> /home/vscode/.bashrc
