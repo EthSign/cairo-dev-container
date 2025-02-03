@@ -21,16 +21,13 @@ RUN mkdir -p /etc/sudoers.d && \
 # Switch to non-root user
 USER vscode
 WORKDIR /home/vscode
+ENV HOME=/home/vscode
 
-# Install Starknet Foundry
-RUN curl --proto '=https' --tlsv1.2 -sSf -y https://sh.rustup.rs | sh
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.15.0
-RUN . "$HOME/.asdf/asdf.sh" && \
-    asdf plugin add scarb && \
-    asdf install scarb latest && \
-    asdf global scarb latest && \
-    asdf plugin add starknet-foundry && \
-    asdf install starknet-foundry latest && \
-    asdf global starknet-foundry latest
-RUN echo '. "$HOME/.asdf/asdf.sh"' >> /home/vscode/.bashrc && \
-    echo '. "$HOME/.asdf/completions/asdf.bash"' >> /home/vscode/.bashrc
+ENV PATH=${PATH}:${HOME}/.local/bin
+
+# Install Rust, Scarb, Starknet Foundry
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH=${PATH}:${HOME}/.cargo/bin
+RUN curl --proto '=https' --tlsv1.2 -sSf https://docs.swmansion.com/scarb/install.sh | sh -s -- -v 2.9.2
+RUN curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/foundry-rs/starknet-foundry/master/scripts/install.sh | sh -s
+RUN snfoundryup -v 0.36.0
