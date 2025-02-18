@@ -25,7 +25,9 @@ ENV HOME=/home/vscode
 
 ENV PATH=${PATH}:${HOME}/.local/bin
 
-# Install Scarb, Starknet Foundry
+# Install Rust, Scarb, Starknet Foundry
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH=${PATH}:${HOME}/.cargo/bin
 RUN curl --proto '=https' --tlsv1.2 -sSf https://docs.swmansion.com/scarb/install.sh | sh -s -- -v 2.10.0
 RUN curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/foundry-rs/starknet-foundry/master/scripts/install.sh | sh -s
 RUN snfoundryup -v 0.37.0
